@@ -1,5 +1,4 @@
 <?php
-// upload_imagen.php — Caso 5: Carga de archivos con validación real
 declare(strict_types=1);
 require_once __DIR__ . '/logger.php';
 
@@ -7,7 +6,7 @@ function subirImagen(array $archivo, int $usuarioId): array
 {
     $EXTENSIONES_PERMITIDAS = ['jpg', 'jpeg', 'png', 'webp'];
     $MIME_PERMITIDOS = ['image/jpeg', 'image/png', 'image/webp'];
-    $MAX_BYTES = 3 * 1024 * 1024; // 3 MB
+    $MAX_BYTES = 3 * 1024 * 1024;
 
     if ($archivo['error'] !== UPLOAD_ERR_OK) {
         return ['ok' => false, 'msg' => 'Error al subir el archivo.'];
@@ -23,7 +22,6 @@ function subirImagen(array $archivo, int $usuarioId): array
         return ['ok' => false, 'msg' => 'Tipo de archivo no permitido.'];
     }
 
-    // Validar el tipo MIME real del contenido (no confiar en la extensión ni en $_FILES['type'])
     $finfo = finfo_open(FILEINFO_MIME_TYPE);
     $mimeReal = finfo_file($finfo, $archivo['tmp_name']);
     finfo_close($finfo);
@@ -33,10 +31,7 @@ function subirImagen(array $archivo, int $usuarioId): array
         return ['ok' => false, 'msg' => 'El contenido del archivo no es una imagen válida.'];
     }
 
-    // Nombre de archivo generado por el servidor (evita path traversal y ejecución de .php)
     $nombreSeguro = bin2hex(random_bytes(16)) . '.' . $extension;
-
-    // Carpeta fuera del alcance de ejecución de PHP (o con .htaccess que deniegue ejecución)
     $destino = __DIR__ . '/uploads_privados/' . $nombreSeguro;
 
     if (!is_dir(__DIR__ . '/uploads_privados')) {

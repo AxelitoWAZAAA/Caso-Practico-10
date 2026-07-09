@@ -1,9 +1,8 @@
 <?php
-// error_handler.php — Caso 6: Manejo centralizado de errores
 declare(strict_types=1);
 require_once __DIR__ . '/logger.php';
 
-ini_set('display_errors', '0');   // nunca mostrar errores al cliente
+ini_set('display_errors', '0');
 ini_set('log_errors', '1');
 ini_set('error_log', __DIR__ . '/logs/php_errors.log');
 
@@ -17,5 +16,5 @@ set_exception_handler(function (Throwable $e): void {
 
 set_error_handler(function (int $severity, string $message, string $file, int $line): bool {
     logSecurityEvent('PHP_ERROR', "$message en $file:$line");
-    return true; // evita que PHP imprima el error nativo
+    return true;
 });

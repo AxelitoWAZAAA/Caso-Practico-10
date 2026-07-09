@@ -1,5 +1,4 @@
 <?php
-// validador.php — Caso 10: Validación centralizada de formularios
 declare(strict_types=1);
 
 final class Validador
@@ -7,8 +6,8 @@ final class Validador
     public static function texto(string $valor, int $max = 255): string
     {
         $valor = trim($valor);
-        $valor = strip_tags($valor);              // elimina HTML/scripts
-        return mb_substr($valor, 0, $max);        // limita longitud
+        $valor = strip_tags($valor);
+        return mb_substr($valor, 0, $max);
     }
 
     public static function entero(mixed $valor): ?int
@@ -29,9 +28,3 @@ final class Validador
         return preg_match('/^[a-zA-Z0-9_\-]{3,50}$/', $valor) === 1 ? $valor : null;
     }
 }
-
-// Uso típico en cualquier endpoint que reciba datos de formulario:
-// $nombre  = Validador::texto($_POST['nombre'] ?? '');
-// $edad    = Validador::entero($_POST['edad'] ?? null);
-// $correo  = Validador::correo($_POST['correo'] ?? '');
-// if ($correo === null) { /* rechazar solicitud */ }

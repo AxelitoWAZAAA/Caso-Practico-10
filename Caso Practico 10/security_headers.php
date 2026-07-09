@@ -1,8 +1,6 @@
 <?php
-// security_headers.php — Caso 7: Forzar HTTPS y cabeceras de seguridad
 declare(strict_types=1);
 
-// Redirigir a HTTPS si la petición llega por HTTP
 if (empty($_SERVER['HTTPS']) || $_SERVER['HTTPS'] === 'off') {
     $redirectUrl = 'https://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
     header('Location: ' . $redirectUrl, true, 301);

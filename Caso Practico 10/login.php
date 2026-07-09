@@ -1,5 +1,4 @@
 <?php
-// login.php — Caso 1: SQL Injection corregido (PDO + prepared statement + verificación de hash)
 declare(strict_types=1);
 require_once __DIR__ . '/db.php';
 require_once __DIR__ . '/logger.php';
@@ -40,7 +39,6 @@ function login(string $usuario, string $passwordPlano): array|false
         return false;
     }
 
-    // Login correcto: resetear contador de intentos
     $pdo->prepare('UPDATE usuarios SET intentos_fallidos = 0, bloqueado_hasta = NULL WHERE id = :id')
         ->execute(['id' => $user['id']]);
 

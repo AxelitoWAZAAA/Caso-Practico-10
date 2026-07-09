@@ -1,5 +1,4 @@
 <?php
-// logger.php
 declare(strict_types=1);
 
 function logSecurityEvent(string $type, string $message, ?string $user = null): void
@@ -18,6 +17,5 @@ function logSecurityEvent(string $type, string $message, ?string $user = null): 
         $message
     );
 
-    // append seguro, sin exponer ruta ni datos sensibles al usuario final
     file_put_contents($logDir . '/security.log', $entry, FILE_APPEND | LOCK_EX);
 }
